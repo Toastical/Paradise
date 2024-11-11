@@ -903,6 +903,7 @@
 #include "code\game\machinery\computer\cloning.dm"
 #include "code\game\machinery\computer\communications.dm"
 #include "code\game\machinery\computer\computer.dm"
+#include "code\game\machinery\computer\computer_terminal.dm"
 #include "code\game\machinery\computer\crew_monitoring.dm"
 #include "code\game\machinery\computer\depot_consoles.dm"
 #include "code\game\machinery\computer\HolodeckControl.dm"
