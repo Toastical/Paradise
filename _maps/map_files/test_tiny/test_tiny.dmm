@@ -33,7 +33,15 @@
 "u" = (
 /turf/simulated/wall/mineral/titanium,
 /area/shuttle/arrival/station)
+"v" = (
+/obj/machinery/computer/security,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
 "x" = (
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"D" = (
+/obj/machinery/computer/secure_data,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
 "F" = (
@@ -48,6 +56,11 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/computer/med_data,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"S" = (
+/obj/machinery/computer/computer_terminal,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
 "U" = (
@@ -32055,8 +32068,8 @@ u
 m
 t
 I
-x
-x
+v
+D
 u
 a
 a
@@ -32823,7 +32836,7 @@ a
 a
 a
 u
-x
+S
 x
 x
 x
