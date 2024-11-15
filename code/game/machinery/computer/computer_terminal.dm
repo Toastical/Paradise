@@ -9,9 +9,9 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	circuit = /obj/item/circuitboard/computer_terminal
-	var/current_page = TERM_LOGS
+	var/screen = TERM_LOGS
 	var/current_log = null
-	var/printing = FALSE
+	var/is_printing = FALSE
 
 /obj/machinery/computer/computer_terminal/Initialize(mapload)
 	. = ..()
@@ -39,6 +39,14 @@
 		ui.open()
 		ui.set_autoupdate(FALSE)
 
+/obj/machinery/computer/computer_terminal/ui_data(mob/user)
+	var/list/data = list()
+	data["screen"] = screen
+	data["is_printing"] = is_printing
+	switch(screen)
+		if(TERM_LOGS)
+			var/list/logs = list("Help", "Helping", "electricboxdog", "boogalo", "shitstorm")
+			data["logs"] = logs
 #undef TERM_LOGS
 #undef TERM_EDITOR
 #undef LOG_TITLE_MAX_LENGTH
