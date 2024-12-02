@@ -15,6 +15,7 @@
 	PAI cable
 	Red Phone
 	Popsicle Sticks
+	Meat Hook
 */
 
 /obj/item/balltoy
@@ -214,42 +215,4 @@
 	desc = "A small wooden stick, usually topped by popsicles or other frozen treats."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "popsicle_stick"
-
-/obj/item/hook
-	name = "meat hook"
-	desc = "Mid or feed."
-	icon_state = "hook"
-	item_state = "chain"
-	flags = NOBLUDGEON
-	force = 18
-
-/obj/item/hook/attack_self(mob/user)
-	to_chat(user, "<span class='notice>You coil the hook, ready to strike.</span>")
-	var/obj/item/gun/magic/hook/weapon = new /obj/item/gun/magic/hook
-	qdel(src)
-	user.put_in_active_hand(weapon)
-
-/obj/item/hook/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	var/turf/T = get_turf(target)
-	var/turf/T_user = get_turf(user)
-	if(!proximity)
-		return
-	if(!istype(T, /turf/simulated/floor/chasm))
-		return
-	if(do_after_once(user, 5 SECONDS, target = user))
-		for(var/obj/effect/abstract/chasm_storage/C in T)
-			var/found_mob = FALSE
-			for(var/mob/living/carbon/human/M in C)
-				found_mob = TRUE
-				to_chat(user, "<span class='notice'>You manage to hook something!</span>")
-				if(prob(20)) // chance to rip off a limb
-					var/obj/item/organ/external/L = M.get_organ(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-					if(istype(L, HEAD || UPPER_TORSO || LOWER_TORSO) || !L) // contingency, so we dont fuck over IPCs OR if we hit a missing limb
-						to_chat(user, "<span class='warning'>Your hook missed the body.</span>")
-						return
-					to_chat(user, "<span class='warning'>[L] tears off the hook!</span>")
-					L.droplimb(TRUE, DROPLIMB_SHARP)
-				else
-					M.forceMove(T_user)
-			if(!found_mob)
-				to_chat(user, "<span class='warning'>Your hook hits the bottom.</span>")
+	

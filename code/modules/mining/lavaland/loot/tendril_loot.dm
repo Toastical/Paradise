@@ -338,6 +338,7 @@
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
+	var/fishing_mode = FALSE
 	
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -382,15 +383,19 @@
 	return ..()
 
 /obj/item/gun/magic/hook/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You unravel the meat hook.</span>")
-	/var//obj/item/hook/fishing = new /obj/item/hook
-	qdel(src)
-	user.put_in_active_hand(fishing)
+	fishing_mode = !fishing_mode
+	to_chat(user, "<span class='notice'>You [fishing_mode ? "unravel" : "coil"] [src].</span>")
 
-/obj/item/gun/magic/hook/proc/fishing(atom/A, mob/living/user)
+/obj/item/gun/magic/hook/afterattack(atom/target, mob/living/user, proximity)
+	if(fishing_mode)
+		fishing(target, user, proximity)
+		return
+	..()
+	
+/obj/item/gun/magic/hook/proc/fishing(atom/A, mob/living/user, proximity)
 	var/turf/T = get_turf(A)
 	var/turf/T_user = get_turf(user)
-	if(!user.can_reach(T))
+	if(!proximity)
 		return
 	if(!istype(T, /turf/simulated/floor/chasm))
 		return
@@ -403,7 +408,7 @@
 				if(prob(20)) // chance to rip off a limb
 					var/obj/item/organ/external/L = M.get_organ(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 					if(istype(L, HEAD || UPPER_TORSO || LOWER_TORSO) || !L) // contingency, so we dont fuck over IPCs OR if we hit a missing limb
-						to_chat(user, "<span class='warning'>Your hook missed the body.</span>")
+						to_chat(user, "<span class='warning'>You miss the body.</span>")
 						return
 					to_chat(user, "<span class='warning'>[L] tears off the hook!</span>")
 					L.droplimb(TRUE, DROPLIMB_SHARP)
