@@ -338,7 +338,6 @@
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
-	var/fishing_mode = FALSE
 	
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -383,13 +382,10 @@
 	return ..()
 
 /obj/item/gun/magic/hook/attack_self(mob/user)
-	fishing_mode = !fishing_mode
-	to_chat(user, "<span class='notice'>You [fishing_mode ? "get ready to fish." : "are no longer ready to fish."]</span>")
-
-/obj/item/gun/magic/hook/pre_attack(atom/A, mob/living/user, params)
-	if(fishing_mode)
-		fishing(A, user)
-		return
+	to_chat(user, "<span class='notice'>You unravel the meat hook.</span>")
+	/var//obj/item/hook/fishing = new /obj/item/hook
+	qdel(src)
+	user.put_in_active_hand(fishing)
 
 /obj/item/gun/magic/hook/proc/fishing(atom/A, mob/living/user)
 	var/turf/T = get_turf(A)
