@@ -2,19 +2,11 @@
 "a" = (
 /turf/space,
 /area/space)
-"b" = (
-/obj/effect/landmark{
-	icon = 'icons/effects/spawner_icons.dmi';
-	icon_state = "spooky";
-	name = "Observer-Start"
-	},
-/obj/effect/landmark/spawner/late/crew,
-/turf/simulated/floor/mineral/titanium/blue,
-/area/shuttle/arrival/station)
 "p" = (
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
 "u" = (
@@ -25,6 +17,7 @@
 /area/shuttle/arrival/station)
 "F" = (
 /obj/machinery/light,
+/obj/structure/fans/tiny,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
 "I" = (
@@ -33,11 +26,21 @@
 	},
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
-"U" = (
+"J" = (
+/obj/structure/fans/tiny,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"Q" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/mineral/titanium/blue,
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,
+/area/shuttle/arrival/station)
+"T" = (
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,
+/area/shuttle/arrival/station)
+"U" = (
+/turf/simulated/floor/chasm,
 /area/shuttle/arrival/station)
 
 (1,1,1) = {"
@@ -32550,9 +32553,9 @@ a
 a
 u
 p
-x
-b
-x
+J
+J
+J
 F
 u
 a
@@ -32806,11 +32809,11 @@ a
 a
 a
 u
-x
-x
-x
-x
-x
+T
+T
+T
+T
+T
 u
 a
 a
@@ -33063,11 +33066,11 @@ a
 a
 a
 u
-x
-x
+T
 U
-x
-x
+U
+U
+T
 u
 a
 a
@@ -33320,11 +33323,11 @@ a
 a
 a
 u
-u
-u
-u
-u
-u
+T
+U
+U
+U
+T
 u
 a
 a
@@ -33576,13 +33579,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+u
+T
+U
+U
+U
+T
+u
 a
 a
 a
@@ -33833,13 +33836,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+u
+T
+U
+U
+U
+T
+u
 a
 a
 a
@@ -34090,13 +34093,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+u
+T
+U
+U
+U
+T
+u
 a
 a
 a
@@ -34347,13 +34350,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+u
+T
+T
+Q
+T
+T
+u
 a
 a
 a
@@ -34604,13 +34607,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+u
+u
+u
+u
+u
+u
+u
 a
 a
 a

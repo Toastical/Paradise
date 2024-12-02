@@ -697,6 +697,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/card/id/captains_spare,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "darkfull"
@@ -4989,6 +4990,13 @@
 /obj/structure/lavaland_billboard,
 /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/targetable)
+"sE" = (
+/mob/living/carbon/human,
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "darkfull"
+	},
+/area/mine/outpost/storage)
 "sF" = (
 /obj/structure/bookcase{
 	name = "bookcase (Fiction)"
@@ -6518,6 +6526,13 @@
 	},
 /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/outpost/catwalk)
+"Bz" = (
+/obj/effect/landmark/spawner/late/crew,
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "darkfull"
+	},
+/area/mine/outpost/storage)
 "BD" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -7088,10 +7103,7 @@
 /turf/simulated/floor/plating,
 /area/mine/outpost/maintenance/south)
 "Fd" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/gun/magic/hook,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "darkfull"
@@ -26385,7 +26397,7 @@ cU
 jP
 bE
 cs
-bE
+Bz
 eG
 fp
 bU
@@ -26899,7 +26911,7 @@ cU
 jP
 bV
 Gl
-bE
+sE
 eG
 aN
 bU

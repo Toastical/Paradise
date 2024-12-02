@@ -338,7 +338,8 @@
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
-
+	var/fishing_mode = FALSE
+	
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
 	desc = "a hook."
@@ -380,6 +381,40 @@
 /obj/item/projectile/hook/Destroy()
 	QDEL_NULL(chain)
 	return ..()
+
+/obj/item/gun/magic/hook/attack_self(mob/user)
+	fishing_mode = !fishing_mode
+	to_chat(user, "<span class='notice'>You [fishing_mode ? "get ready to fish." : "are no longer ready to fish."]</span>")
+
+/obj/item/gun/magic/hook/pre_attack(atom/A, mob/living/user, params)
+	if(fishing_mode)
+		fishing(A, user)
+		return
+
+/obj/item/gun/magic/hook/proc/fishing(atom/A, mob/living/user)
+	var/turf/T = get_turf(A)
+	var/turf/T_user = get_turf(user)
+	if(!user.can_reach(T))
+		return
+	if(!istype(T, /turf/simulated/floor/chasm))
+		return
+	if(do_after_once(user, 5 SECONDS, target = user))
+		for(var/obj/effect/abstract/chasm_storage/C in T)
+			var/found_mob = FALSE
+			for(var/mob/living/carbon/human/M in C)
+				found_mob = TRUE
+				to_chat(user, "<span class='notice'>You manage to hook something!</span>")
+				if(prob(20)) // chance to rip off a limb
+					var/obj/item/organ/external/L = M.get_organ(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+					if(istype(L, HEAD || UPPER_TORSO || LOWER_TORSO) || !L) // contingency, so we dont fuck over IPCs OR if we hit a missing limb
+						to_chat(user, "<span class='warning'>Your hook missed the body.</span>")
+						return
+					to_chat(user, "<span class='warning'>[L] tears off the hook!</span>")
+					L.droplimb(TRUE, DROPLIMB_SHARP)
+				else
+					M.forceMove(T_user)
+			if(!found_mob)
+				to_chat(user, "<span class='warning'>Your hook hits the bottom.</span>")
 
 //Immortality Talisman
 
