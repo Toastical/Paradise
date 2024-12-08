@@ -15,6 +15,9 @@
 	var/region_access = list()
 	var/additional_access = list()
 	var/obj/item/card/id/ID
+	var/primitive = FALSE // something not technological. like the janitor keychain
+
+	new_attack_chain = TRUE
 
 /obj/item/door_remote/New()
 	..()
@@ -28,7 +31,10 @@
 	QDEL_NULL(ID)
 	return ..()
 
-/obj/item/door_remote/attack_self__legacy__attackchain(mob/user)
+/obj/item/door_remote/activate_self(mob/user)
+	if(..() || primitive)
+		return
+
 	var/list/options = list(WAND_OPEN = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_open"),
 									WAND_BOLT = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_bolt"),
 									WAND_EMERGENCY = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_ea"),
@@ -47,13 +53,24 @@
 
 /obj/item/door_remote/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It's current mode is: [mode]</span>"
+	if(!primitive)
+		. += "<span class='notice'>It's current mode is: [mode]</span>"
 
-/obj/item/door_remote/afterattack__legacy__attackchain(obj/target, mob/user)
+/obj/item/door_remote/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(istype(target, /obj/machinery/door/airlock))
 		access_airlock(target, user)
+		return ITEM_INTERACT_SUCCESS
 	if(istype(target, /obj/machinery/door/window))
 		access_windoor(target, user)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/door_remote/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(istype(target, /obj/machinery/door/airlock))
+		access_airlock(target, user)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(target, /obj/machinery/door/window))
+		access_windoor(target, user)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/door_remote/proc/access_airlock(obj/machinery/door/airlock/D, mob/user)
 	if(HAS_TRAIT(D, TRAIT_CMAGGED))
@@ -184,7 +201,15 @@
 	/// How far can we use this. Leave `null` for infinite range
 	var/range
 
-/obj/item/door_remote/omni/access_tuner/afterattack__legacy__attackchain(obj/machinery/door/D, mob/user)
+/obj/item/door_remote/omni/access_tuner/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(hacking(target, user))
+		return ..()
+	
+/obj/item/door_remote/omni/access_tuner/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(hacking(target, user))
+		return ..()	
+
+/obj/item/door_remote/omni/access_tuner/proc/hacking(obj/machinery/door/D, mob/living/user)
 	if(!istype(D, /obj/machinery/door/airlock) && !istype(D, /obj/machinery/door/window))
 		return
 	if(!isnull(range) && get_dist(src, D) > range)
@@ -197,9 +222,12 @@
 	busy = TRUE
 	to_chat(user, "<span class='notice'>[src] is attempting to interface with [D]...</span>")
 	if(do_after(user, hack_speed, target = D))
-		. = ..()
-	busy = FALSE
-	icon_state = "hacktool"
+		busy = FALSE
+		icon_state = "hacktool"
+		return ITEM_INTERACT_SUCCESS
+	else
+		busy = FALSE
+		icon_state = "hacktool"
 
 /obj/item/door_remote/omni/access_tuner/flayer
 	name = "integrated access tuner"
@@ -220,6 +248,8 @@
 	var/cooldown = 0
 	/// How fast does the keyring open an airlock. It is not set here so that it can be set via the user's role.
 	var/hack_speed
+	/// The keys aren't technology
+	primitive = TRUE
 	/// Stores the last airlock opened, opens faster on repeated use
 	var/last_airlock_uid
 	additional_access = list(ACCESS_MEDICAL, ACCESS_RESEARCH, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_MINING, ACCESS_KITCHEN, ACCESS_BAR, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE)
@@ -228,21 +258,22 @@
 	. = ..()
 	. += "<span class='notice'>This keyring has access to Medbay, Science, Engineering, Cargo, the Bar and the Kitchen!</span>"
 
-/obj/item/door_remote/janikeyring/attack_self__legacy__attackchain(mob/user)
+/obj/item/door_remote/janikeyring/activate_self(mob/user)
+	if(..())
+		return
+	
 	if(cooldown > world.time)
 		return
 	to_chat(user, "<span class='warning'>You shake [src]!</span>")
 	playsound(src, 'sound/items/keyring_shake.ogg', 50)
 	cooldown = world.time + JANGLE_COOLDOWN
 
-/obj/item/door_remote/janikeyring/afterattack__legacy__attackchain(obj/machinery/door/D, mob/user, proximity)
-	if(!proximity)
-		return
+/obj/item/door_remote/janikeyring/interact_with_atom(obj/machinery/door/D, mob/living/user, list/modifiers)
 	if(!istype(D, /obj/machinery/door/airlock) && !istype(D, /obj/machinery/door/window))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(busy)
 		to_chat(user, "<span class='warning'>You are already using [src] on the [D]'s access panel!</span>")
-		return
+		return ITEM_INTERACT_BLOCKING
 	busy = TRUE
 	var/mob/living/carbon/human/H = user
 	if(H.mind.assigned_role == "Janitor" && last_airlock_uid == D.UID())
@@ -258,8 +289,9 @@
 	if(do_after(user, hack_speed, target = D, progress = 0))
 		if(D.check_access(ID))
 			last_airlock_uid = D.UID()
-		. = ..()
+		..()
 	busy = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/door_remote/janikeyring/access_airlock(obj/machinery/door/airlock/D, mob/user)
 	if(HAS_TRAIT(D, TRAIT_CMAGGED))
