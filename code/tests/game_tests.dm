@@ -6,6 +6,7 @@
 #include "_game_test.dm"
 #include "atmos\test_ventcrawl.dm"
 #include "attack_chain\test_attack_chain_applicator.dm"
+#include "attack_chain\test_attack_chain_condiment.dm"
 #include "attack_chain\test_attack_chain_cult_dagger.dm"
 #include "attack_chain\test_attack_chain_machinery.dm"
 #include "attack_chain\test_attack_chain_turf.dm"
