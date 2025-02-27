@@ -185,6 +185,8 @@
 			ejectpai()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
+	if(!isliving(H))
+		return
 	threatlevel = H.assess_threat(src)
 	threatlevel += 6
 	if(threatlevel >= 4)
