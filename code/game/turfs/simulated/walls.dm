@@ -540,6 +540,11 @@
 
 	update_icon()
 
+/turf/simulated/wall/MouseDrop_T(atom/dropping, mob/living/carbon/human/user, params)
+	if(user != dropping || !istype(user))
+		return
+	user.lean(user, src)
+
 /turf/simulated/wall/MouseEntered(location, control, params)
 	var/datum/hud/active_hud = usr.hud_used // Don't nullcheck this stuff, if it breaks we wanna know it breaks
 	var/screentip_mode = usr.client.prefs.screentip_mode

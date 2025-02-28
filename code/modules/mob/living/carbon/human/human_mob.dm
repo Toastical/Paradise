@@ -2132,3 +2132,32 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 		hallucination_to_make = string_path
 	new hallucination_to_make(get_turf(src), src)
 
+/mob/living/carbon/human/proc/lean(mob/user, atom/target)
+	var/direction = get_dir(target, user)
+	var/leaning = FALSE
+
+	if(leaning || !IS_DIR_CARDINAL(direction))
+		return
+
+	leaning = TRUE
+	user.density = FALSE
+	user.dir = direction
+	switch(direction)
+		// if(NORTH)
+		// 	user.pixel_y = -20
+		if(SOUTH)
+			user.pixel_y = 20
+		if(EAST)
+			user.pixel_x = -10
+		if(WEST)
+			user.pixel_x = 10
+		return
+	RegisterSignal(user, COMSIG_MOVABLE_SHOVE_IMPACT, PROC_REF(on_disrupt))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_disrupt))
+
+/mob/living/carbon/human/proc/on_disrupt()
+	src.density = TRUE
+	src.pixel_x = get_standard_pixel_x_offset()
+	src.pixel_y = get_standard_pixel_y_offset()
+	UnregisterSignal(src, COMSIG_MOVABLE_SHOVE_IMPACT, PROC_REF(on_disrupt))
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_disrupt))
