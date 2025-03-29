@@ -36,6 +36,8 @@
 	var/death_cooldown = 0 // How long you have to wait after dying before using it again, in deciseconds. People that join as observers are not included.
 	///If antagbanned people are prevented from using it, only false for the ghost bar spawner.
 	var/restrict_antagban = TRUE
+	/// Ignore user respawnability
+	var/ignore_respawnability = FALSE
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!valid_to_spawn(user))
@@ -86,7 +88,7 @@
 	if((jobban_isbanned(user, banType) || (restrict_antagban && jobban_isbanned(user, ROLE_SYNDICATE))))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return FALSE
-	if(!HAS_TRAIT(user, TRAIT_RESPAWNABLE))
+	if(!HAS_TRAIT(user, TRAIT_RESPAWNABLE) && !ignore_respawnability)
 		to_chat(user, "<span class='warning'>You currently do not have respawnability!</span>")
 		return FALSE
 	if(isobserver(user))
