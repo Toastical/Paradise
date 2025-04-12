@@ -40,6 +40,7 @@
 	var/low_fuel_changes_icon = TRUE
 	/// How often does the tool flash the user's eyes?
 	var/progress_flash_divisor = 1 SECONDS
+	new_attack_chain = TRUE
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
@@ -88,7 +89,10 @@
 		return
 	remove_fuel(maximum_fuel)
 
-/obj/item/weldingtool/attack_self__legacy__attackchain(mob/user)
+/obj/item/weldingtool/activate_self(mob/user)
+	if(..())
+		return
+
 	if(tool_enabled) //Turn off the welder if it's on
 		to_chat(user, "<span class='notice'>You switch off [src].</span>")
 		toggle_welder()
@@ -148,21 +152,24 @@
 	remove_fuel(amount)
 	return TRUE
 
-/obj/item/weldingtool/afterattack__legacy__attackchain(atom/target, mob/user, proximity, params)
+/obj/item/weldingtool/after_attack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!tool_enabled)
-		return
-	if(!proximity || isturf(target)) // We don't want to take away fuel when we hit something far away
+	if(!tool_enabled || can_reach(target, src) || isturf(target)) // We don't want to take away fuel when we hit something far away
 		return
 	remove_fuel(0.5)
 
-/obj/item/weldingtool/attack__legacy__attackchain(mob/living/target, mob/living/user, def_zone)
-	if(cigarette_lighter_act(user, target))
-		return
+/obj/item/weldingtool/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(cigarette_lighter_act(user, target)) // undefined var on wall
+		return ITEM_INTERACT_COMPLETE
+	return ..()
+
+/obj/item/weldingtool/attack(mob/living/target, mob/living/user, params)
+	if(..())
+		return FINISH_ATTACK
 	if(tool_enabled && target.IgniteMob())
 		message_admins("[key_name_admin(user)] set [key_name_admin(target)] on fire")
 		log_game("[key_name(user)] set [key_name(target)] on fire")
-	return ..()
+		return FINISH_ATTACK
 
 /obj/item/weldingtool/cigarette_lighter_act(mob/living/user, mob/living/target, obj/item/direct_attackby_item)
 	var/obj/item/clothing/mask/cigarette/cig = ..()
