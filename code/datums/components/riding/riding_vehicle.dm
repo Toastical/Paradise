@@ -94,7 +94,7 @@
 	return TRUE
 
 /datum/component/riding/vehicle/scooter
-	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER | RIDER_BLOCK_PULL
 
 /datum/component/riding/vehicle/scooter/handle_specials(mob/living/riding_mob)
 	. = ..()
@@ -105,7 +105,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
-	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER | RIDER_CARBON_OR_SILICON_NO_LARGE_MOBS | RIDER_BLOCK_PULL
+	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER | RIDER_CARBON_OR_SILICON_NO_LARGE_MOBS
 	///If TRUE, the vehicle will be slower (but safer) to ride on walk intent.
 	var/can_slow_down = TRUE
 
