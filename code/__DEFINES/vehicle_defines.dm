@@ -26,6 +26,8 @@
 #define UNBUCKLE_DISABLED_RIDER (1<<3)
 /// Do we need a carbon, a silicon, or a small mob, to ride the vehicle?
 #define RIDER_CARBON_OR_SILICON_NO_LARGE_MOBS (1<<4)
+/// Vehicle blocks pulling
+#define RIDER_BLOCK_PULL (1<<5)
 
 /// The vehicle being ridden requires pixel offsets for all directions
 #define RIDING_OFFSET_ALL "ALL"

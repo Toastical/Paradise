@@ -96,9 +96,11 @@
 	handle_vehicle_layer(movable_parent.dir)
 	handle_vehicle_offsets(movable_parent.dir)
 
-	if(rider.pulling == source)
-		rider.stop_pulling()
-	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
+	if(ride_check_flags & RIDER_BLOCK_PULL)
+		if(rider.pulling)
+			to_chat(rider, "<span class='warning'>You can't pull [rider.pulling]!</span>")
+			rider.stop_pulling()
+		RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
 
 /// This proc is called when the rider attempts to grab something, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
