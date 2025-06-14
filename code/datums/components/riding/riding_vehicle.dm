@@ -105,7 +105,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
-	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER | RIDER_CARBON_OR_SILICON_NO_LARGE_MOBS
+	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER | RIDER_CARBON_OR_SILICON_NO_LARGE_MOBS | RIDER_BLOCK_PULL
 	///If TRUE, the vehicle will be slower (but safer) to ride on walk intent.
 	var/can_slow_down = TRUE
 
