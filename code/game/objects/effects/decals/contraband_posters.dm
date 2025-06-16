@@ -54,6 +54,7 @@
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
+	layer = BELOW_OBJ_LAYER
 	var/original_name
 	var/random_basetype
 	var/ruined = FALSE
