@@ -33,6 +33,8 @@
 	var/override_allow_spacemove = FALSE
 	/// can anyone other than the rider unbuckle the rider?
 	var/can_force_unbuckle = TRUE
+	/// does the vehicle block pulling?
+	var/block_pull = FALSE
 
 	/**
 	 * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
@@ -96,9 +98,10 @@
 	handle_vehicle_layer(movable_parent.dir)
 	handle_vehicle_offsets(movable_parent.dir)
 
-	if(rider.pulling == source)
+	if(block_pull)
+		to_chat(rider, "<span class='warning'>You can't pull [rider.pulling]!</span>")
 		rider.stop_pulling()
-	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
+		RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
 
 /// This proc is called when the rider attempts to grab something, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
