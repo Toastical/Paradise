@@ -70,6 +70,18 @@ GLOBAL_LIST_INIT(lizard_recipes, list(
 	origin_tech = "materials=2"
 	max_amount = 50
 
+GLOBAL_LIST_INIT(fur_recipes, list (
+	new /datum/stack_recipe("fur cap", /obj/item/clothing/head/furcap, 1, on_floor = TRUE),
+	new /datum/stack_recipe("fur coat", /obj/item/clothing/suit/furcoat, 5, on_floor = TRUE),
+	new /datum/stack_recipe("fur boots", /obj/item/clothing/shoes/furboots, 2, on_floor = TRUE),
+	new /datum/stack_recipe("fur cape", /obj/item/clothing/neck/cloak/furcape, 5, on_floor = TRUE),
+	new /datum/stack_recipe("fur gloves", /obj/item/clothing/gloves/furgloves, 1, on_floor = TRUE)
+))
+
+/obj/item/stack/sheet/fur/Initialize(mapload, new_amount, merge)
+	recipes = GLOB.fur_recipes
+	return ..()
+
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
 	desc = "The skin of a terrible creature."
