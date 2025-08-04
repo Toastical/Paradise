@@ -324,6 +324,21 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 // Misc.
 /////////////////////////////
 
+/obj/item/stack/cable_coil/proc/choose_color(mob/user)
+	var/cablecolor = tgui_input_list(usr, "Pick a cable color.", "Cable Color", list("red","yellow","green","blue","pink","orange","cyan","white", "custom"))
+	if(!cablecolor)
+		return
+
+	if(cablecolor == "custom")
+		cablecolor = tgui_input_color(user, "Pick a cable color.", "Cable Color", color)
+		if(!cablecolor)
+			return
+		color = cablecolor
+		return
+
+	cable_color(cablecolor)
+	update_icon()
+
 /obj/item/stack/cable_coil/proc/cable_color(colorC)
 	if(!colorC)
 		color = COLOR_RED
@@ -395,9 +410,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	return // icon_state should always be a full cable
 
 /obj/item/stack/cable_coil/cyborg/attack_self__legacy__attackchain(mob/user)
-	var/cablecolor = tgui_input_list(usr, "Pick a cable color.", "Cable Color", list("red","yellow","green","blue","pink","orange","cyan","white"))
-	cable_color(cablecolor)
-	update_icon()
+	choose_color(user)
 
 #undef HEALPERCABLE
 #undef MAXCABLEPERHEAL

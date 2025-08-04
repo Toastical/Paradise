@@ -58,10 +58,10 @@
 		var/diff = loaded.amount % 30
 		if(diff)
 			loaded.use(diff)
-			new /obj/item/stack/cable_coil(user.loc, diff)
+			new /obj/item/stack/cable_coil(user.loc, diff, loaded.color)
 		else
 			loaded.use(30)
-			new /obj/item/stack/cable_coil(user.loc, 30)
+			new /obj/item/stack/cable_coil(user.loc, 30, loaded.color)
 	loaded.max_amount = initial(loaded.max_amount)
 	loaded.forceMove(user.loc)
 	user.put_in_hands(loaded)
@@ -154,6 +154,13 @@
 			last = null
 	last = loaded.place_turf(get_turf(loc), user, turn(user.dir, 180))
 	is_empty(user) //If we've run out, display message
+
+/obj/item/rcl/AltClick(mob/user, modifiers)
+	. = ..()
+	if(!loaded)
+		to_chat(user, "<span class='warning>There's no loaded cable.</span>")
+		return
+	loaded.choose_color(user)
 
 /obj/item/rcl/pre_loaded/New() //Comes preloaded with cable, for testing stuff
 	..()
