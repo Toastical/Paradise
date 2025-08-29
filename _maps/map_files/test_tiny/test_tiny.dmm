@@ -11,10 +11,30 @@
 /obj/effect/landmark/spawner/late/crew,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
+"i" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"k" = (
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
 "p" = (
 /obj/machinery/light{
 	dir = 1
 	},
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"t" = (
+/obj/item/rpd/bluespace,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
 "u" = (
@@ -27,9 +47,33 @@
 /obj/machinery/light,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
+"G" = (
+/obj/item/pipe,
+/obj/item/pipe{
+	dir = 5
+	},
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
 "I" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"J" = (
+/obj/structure/table,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"L" = (
+/obj/item/rpd,
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"Q" = (
+/turf/simulated/wall,
+/area/shuttle/arrival/station)
+"T" = (
+/obj/item/pipe{
+	dir = 5
 	},
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
@@ -37,6 +81,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/turf/simulated/floor/mineral/titanium/blue,
+/area/shuttle/arrival/station)
+"W" = (
+/obj/effect/spawner/window/reinforced,
 /turf/simulated/floor/mineral/titanium/blue,
 /area/shuttle/arrival/station)
 
@@ -31519,12 +31567,12 @@ a
 a
 u
 x
+Q
 x
 x
-x
-x
-x
-x
+J
+J
+J
 x
 x
 x
@@ -31776,10 +31824,10 @@ a
 a
 u
 x
+Q
 x
 x
-x
-x
+J
 x
 x
 x
@@ -32033,7 +32081,7 @@ a
 a
 u
 p
-x
+Q
 x
 x
 x
@@ -32290,10 +32338,10 @@ a
 a
 u
 x
+W
 x
 x
-x
-x
+L
 x
 x
 x
@@ -32547,10 +32595,10 @@ a
 a
 u
 x
+W
 x
 x
-x
-x
+k
 b
 x
 x
@@ -32804,10 +32852,10 @@ a
 a
 u
 x
+W
 x
 x
-x
-x
+t
 x
 x
 x
@@ -33061,7 +33109,7 @@ a
 a
 u
 p
-x
+G
 x
 x
 x
@@ -33318,7 +33366,7 @@ a
 a
 u
 x
-x
+T
 x
 x
 x
@@ -33575,7 +33623,7 @@ a
 a
 u
 x
-x
+i
 x
 x
 x
