@@ -400,9 +400,9 @@ GLOBAL_LIST_INIT(pipe_path2type, list(
 /obj/item/pipe_meter/rpd_act(mob/user, obj/item/rpd/our_rpd)
 	if(our_rpd.mode == RPD_DELETE_MODE)
 		our_rpd.delete_single_pipe(user, src)
-		return
+		return TRUE
 
-	..()
+	return ..()
 
 /obj/item/pipe_gsensor
 	name = "gas sensor"
@@ -426,9 +426,9 @@ GLOBAL_LIST_INIT(pipe_path2type, list(
 /obj/item/pipe_gsensor/rpd_act(mob/user, obj/item/rpd/our_rpd)
 	if(our_rpd.mode == RPD_DELETE_MODE)
 		our_rpd.delete_single_pipe(user, src)
-		return
+		return TRUE
 
-	..()
+	return ..()
 
 /obj/item/pipe/AltClick(mob/user)
 	if(user.stat || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user))

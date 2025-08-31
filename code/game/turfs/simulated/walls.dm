@@ -185,6 +185,7 @@
 		add_dent(PROJECTILE_IMPACT_WALL_DENT_HIT)
 
 /turf/simulated/wall/rpd_act(mob/user, obj/item/rpd/our_rpd)
+	. = TRUE
 	if(our_rpd.mode == RPD_ATMOS_MODE)
 		if(!our_rpd.ranged)
 			playsound(src, "sound/weapons/circsawhit.ogg", 50, 1)
@@ -195,7 +196,7 @@
 	else if(our_rpd.mode == RPD_DISPOSALS_MODE && !our_rpd.ranged)
 		return
 	else
-		..()
+		return FALSE
 
 /turf/simulated/wall/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)

@@ -108,8 +108,10 @@
 /obj/structure/window/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
 
-/obj/structure/window/rpd_act()
-	return
+/obj/structure/window/rpd_act(mob/user, obj/item/rpd/our_rpd)
+	var/turf/T = get_turf(src)
+	T.rpd_act(user, our_rpd)
+	return TRUE
 
 /obj/structure/window/singularity_pull(S, current_size)
 	..()

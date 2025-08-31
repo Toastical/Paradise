@@ -37,6 +37,7 @@
 	var/alt_sound = null
 	var/auto_wrench_toggle = TRUE
 	var/pipe_label = null
+	new_attack_chain = TRUE
 
 	//Lists of things
 	var/list/mainmenu = list(
@@ -304,23 +305,21 @@
 				return //Either nothing was selected, or an invalid mode was selected
 		to_chat(user, "<span class='notice'>You set [src]'s mode.</span>")
 
-/obj/item/rpd/afterattack__legacy__attackchain(atom/target, mob/user, proximity)
-	..()
-	if(isstorage(target))
-		var/obj/item/storage/S = target
-		if(!S.can_be_inserted(src, stop_messages = TRUE))
-			return
-	if(loc != user)
-		return
-	if(!proximity && !ranged)
-		return
+/obj/item/rpd/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	return rpd_activation(target, user)
+
+/obj/item/rpd/bluespace/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	return rpd_activation(target, user)
+
+/obj/item/rpd/proc/rpd_activation(atom/target, mob/living/user)
+	if(isstorage(target)) // IN THE BAG WE GO
+		return NONE
 	if(world.time < lastused + spawndelay)
-		return
+		return ITEM_INTERACT_COMPLETE
 
 	var/turf/T = get_turf(target)
-
-	if(!T)
-		return
+	// if(!T)
+	// 	return ITEM_INTERACT_COMPLETE
 
 	if(target != T)
 		// We only check the rpd_act of the target if it isn't the turf, because otherwise
@@ -330,7 +329,8 @@
 			// Example: clicking on a pipe with a RPD in rotate mode should rotate that pipe and ignore everything else on the tile.
 			if(ranged)
 				user.Beam(T, icon_state="rped_upgrade", icon='icons/effects/effects.dmi', time=5)
-			return
+			return ITEM_INTERACT_COMPLETE
+		return NONE
 
 	// If we get this far, we have to check every object in the tile, to make sure that none of them block RPD usage on this tile.
 	// This is done by calling rpd_blocksusage on every /obj in the tile. If any block usage, fail at this point.
@@ -338,7 +338,7 @@
 	for(var/obj/O in T)
 		if(O.rpd_blocksusage())
 			to_chat(user, "<span class='warning'>[O] blocks [src]!</span>")
-			return
+			return ITEM_INTERACT_COMPLETE
 
 	// If we get here, then we're effectively acting on the turf, probably placing a pipe.
 	if(ranged) //woosh beam if bluespaced at a distance
@@ -346,14 +346,16 @@
 			message_admins("\[EXPLOIT] [key_name_admin(user)] attempted to place pipes with a BRPD via a camera console. (Attempted range exploit)")
 			playsound(src, 'sound/machines/synth_no.ogg', 15, TRUE)
 			to_chat(user, "<span class='notice'>ERROR: \The [T] is out of [src]'s range!</span>")
-			return
+			return ITEM_INTERACT_COMPLETE
 
 		if(!(user in hearers(12, T))) // Checks if user can hear the target turf, cause viewers doesnt work for it.
 			to_chat(user, "<span class='warning'>[src] needs full visibility to determine the dispensing location.</span>")
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE)
-			return
+			return ITEM_INTERACT_COMPLETE
+
 		user.Beam(T, icon_state = "rped_upgrade", icon = 'icons/effects/effects.dmi', time = 0.5 SECONDS)
 	T.rpd_act(user, src)
+	return ITEM_INTERACT_COMPLETE
 
 /obj/item/rpd/attack_obj__legacy__attackchain(obj/O, mob/living/user)
 	if(user.a_intent != INTENT_HARM)

@@ -679,8 +679,9 @@
 /atom/proc/fart_act(mob/living/M)
 	return FALSE
 
+/// Atoms that return TRUE will stop the interact chain for the RPD.
 /atom/proc/rpd_act()
-	return
+	return FALSE
 
 /atom/proc/rpd_blocksusage()
 	// Atoms that return TRUE prevent RPDs placing any kind of pipes on their turf.
