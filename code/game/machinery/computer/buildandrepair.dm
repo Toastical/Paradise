@@ -257,6 +257,11 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/station_alert
 
+/obj/item/circuitboard/bluespace_miner_console
+	board_name = "Bluespace Miner"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/bluespace_miner_console
+
 /obj/item/circuitboard/atmos_alert
 	board_name = "Atmospheric Alert Computer"
 	icon_state = "engineering"
