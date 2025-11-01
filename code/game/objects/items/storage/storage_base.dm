@@ -114,7 +114,7 @@
 		target.handle_item_insertion(thing, user)
 
 /obj/item/storage/MouseDrop(obj/over_object, src_location, over_location, src_control, over_control, params)
-	if(!ismob(usr)) //so monkeys can take off their backpacks -- Urist
+	if(!ishuman(usr)) //so monkeys can take off their backpacks -- Urist
 		return
 	var/mob/M = usr
 
