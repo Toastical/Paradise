@@ -56,7 +56,7 @@
 		var/obj/item/stack/cable_coil/C = target
 		C.melee_attack_chain(user, src, list2params(modifiers))
 		return ITEM_INTERACT_COMPLETE
-	
+
 	loaded.melee_attack_chain(user, target, list2params(modifiers))
 	return ITEM_INTERACT_COMPLETE
 
@@ -206,7 +206,7 @@
 /obj/item/rcl/robot/AltClick(mob/user, modifiers)
 	if(..())
 		return ITEM_INTERACT_COMPLETE
-	
+
 	if(heavy_mode)
 		loaded.cable_type = /obj/structure/cable
 		loaded.cable_merge_id = CABLE_LOW_POWER
@@ -241,6 +241,6 @@
 	update_icon(UPDATE_ICON_STATE|UPDATE_OVERLAYS)
 
 /obj/item/stack/cable_coil/random/rcl_spool
-	rcl_spool = TRUE
+	destroy_upon_empty = FALSE
 	max_amount = RCL_MAX_SPOOL_SIZE
 	amount = RCL_MAX_SPOOL_SIZE
