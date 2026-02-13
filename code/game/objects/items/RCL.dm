@@ -57,7 +57,7 @@
 		C.melee_attack_chain(user, src, list2params(modifiers))
 		return ITEM_INTERACT_COMPLETE
 
-	if(isturf(target))
+	if(isturf(target) || ismachinery(target) || ismob(target))
 		loaded.melee_attack_chain(user, target, list2params(modifiers))
 		return ITEM_INTERACT_COMPLETE
 
