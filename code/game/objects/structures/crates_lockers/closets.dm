@@ -315,6 +315,8 @@
 		var/obj/item/rcs/E = W
 		E.try_send_container(user, src)
 		return ITEM_INTERACT_COMPLETE
+	if(istype(W, /obj/item/extraction_pack) && !opened)
+		return ..()
 
 	if(opened)
 		if(istype(W, /obj/item/grab))
