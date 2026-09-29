@@ -211,6 +211,12 @@ pub(crate) fn flow_air_once_at_index(
     let mut outgoing_gas_mult: [f32; GAS_COUNT] = [0.0; GAS_COUNT];
     let mut total_weighted_temperature = my_tile.temperature() * my_tile.heat_capacity();
     let mut total_temperature_weights: f32 = my_tile.heat_capacity();
+
+    if x == 113 && y == 62 {
+        let pressure = my_tile.pressure();
+        println!("Pressure at x: {x} y: {y} = {pressure}");
+    }
+
     for (dir, (dx, dy)) in DIRECTIONS.iter().enumerate() {
         let neighbor_index = match ZLevel::maybe_get_index(x + dx, y + dy) {
             Some(value) => value,
